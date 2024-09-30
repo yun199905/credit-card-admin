@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
@@ -6,7 +6,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CreditCard } from '../models/credit-cards';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
-
+import { CreditCardsService } from '../services/credit-cards.service';
 
 @Component({
   selector: 'app-credit-cards',
@@ -16,144 +16,27 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrl: './credit-cards.component.scss'
 })
 export class CreditCardsComponent {
+  #creditCardsService = inject(CreditCardsService);
   displayColumns = ["select", "id", "name", "description", "bankName", "maxCredit", "interestRate", "active", "recommendedScore", "actions"];
-  dataSource = new MatTableDataSource([
-    {
-      "id": 1,
-      "name": "SBI Bank",
-      "description": "SBI Bank offers customers with various options",
-      "bankName": "SBI Bank",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 2,
-      "name": "Mastercard",
-      "description": "Mastercard offers customers with various options",
-      "bankName": "Mastercard",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 3,
-      "name": "Visa",
-      "description": "Visa offers customers with various options",
-      "bankName": "Visa",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 1,
-      "name": "SBI Bank",
-      "description": "SBI Bank offers customers with various options",
-      "bankName": "SBI Bank",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 2,
-      "name": "Mastercard",
-      "description": "Mastercard offers customers with various options",
-      "bankName": "Mastercard",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 3,
-      "name": "Visa",
-      "description": "Visa offers customers with various options",
-      "bankName": "Visa",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 1,
-      "name": "SBI Bank",
-      "description": "SBI Bank offers customers with various options",
-      "bankName": "SBI Bank",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 2,
-      "name": "Mastercard",
-      "description": "Mastercard offers customers with various options",
-      "bankName": "Mastercard",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    },
-    {
-      "id": 3,
-      "name": "Visa",
-      "description": "Visa offers customers with various options",
-      "bankName": "Visa",
-      "maxCredit": 3000,
-      "interestRate": 10,
-      "active": true,
-      "recommendedScore": "700-900",
-      "annualFee": 4,
-      "termsAndConditions": "Following are the terms and conditions",
-      "createdDate": "2023-31-08",
-      "updatedDate": "2023-31-08"
-    }
-  ]);
-
+  creditCards: CreditCard[] = [];
+  dataSource = new MatTableDataSource(this.creditCards);
   selection = new SelectionModel(true, []);
+
+  constructor() {
+    this.#creditCardsService.getCreditCards().subscribe((data) => {
+      this.creditCards = data;
+      this.dataSource = new MatTableDataSource(this.creditCards);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  // }
 
   selectHandler(row: CreditCard){
     this.selection.toggle(row as never);
