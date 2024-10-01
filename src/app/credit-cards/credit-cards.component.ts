@@ -7,11 +7,13 @@ import { CreditCard } from '../models/credit-cards';
 import { MatSort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { CreditCardsService } from '../services/credit-cards.service';
+import {MatIconModule} from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-credit-cards',
   standalone: true,
-  imports: [MatTableModule, MatCardModule, MatCheckboxModule, MatPaginatorModule],
+  imports: [MatTableModule, MatCardModule, MatCheckboxModule, MatPaginatorModule, MatIconModule, RouterModule],
   templateUrl: './credit-cards.component.html',
   styleUrl: './credit-cards.component.scss'
 })
