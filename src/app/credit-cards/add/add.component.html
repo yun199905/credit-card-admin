@@ -1,1 +1,113 @@
-<p>add works!</p>
+<h1>Add New Credit Card</h1>
+<form #addForm="ngForm" (ngSubmit)="addCreditCard()">
+  <div class="field-group">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter Credit Card Name" required minlength="3" maxlength="20" [(ngModel)]="newCreditCard.name" name="name" #name="ngModel">
+      <mat-error>
+        @if (name.touched && name.errors) {
+          @if (name.errors['required']) {
+          {{requiredErrMsg('Name')}}
+          } @else if (name.errors['minlength']) {
+          {{minlengthErrMsg('Name')}}
+          } @else if (name.errors['maxlength']) {
+          {{maxlengthErrMsg('Name')}}
+          }
+        }
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Bank Name</mat-label>
+      <input matInput placeholder="Enter Bank Name" required minlength="3" maxlength="20" [(ngModel)]="newCreditCard.bankName" name="bankName" #bankName="ngModel">
+      <mat-error>
+        @if (bankName.touched && bankName.errors) {
+          @if (bankName.errors['required']) {
+          {{requiredErrMsg('Bank Name')}}
+          } @else if (bankName.errors['minlength']) {
+          {{minlengthErrMsg('Bank Name')}}
+          } @else if (bankName.errors['maxlength']) {
+          {{maxlengthErrMsg('Bank Name')}}
+          }
+        }
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput required [(ngModel)]="newCreditCard.description" name="description" #description="ngModel"></textarea>
+    <mat-error>
+      @if (description.touched && description.invalid) {
+        {{requiredErrMsg('Description')}}
+      }
+      </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Max Credit</mat-label>
+    <input matInput type="number" placeholder="Enter Credit Card Max Credit" required minlength="3" maxlength="20" [(ngModel)]="newCreditCard.maxCredit" name="maxCredit" #maxCredit="ngModel">
+    <mat-error>
+      @if (maxCredit.touched && maxCredit.errors) {
+        @if (maxCredit.errors['required']) {
+        {{requiredErrMsg('Max Credit')}}
+        } @else if (maxCredit.errors['minlength']) {
+        {{minlengthErrMsg('Max Credit')}}
+        } @else if (maxCredit.errors['maxlength']) {
+        {{maxlengthErrMsg('Max Credit')}}
+        }
+      }
+    </mat-error>
+  </mat-form-field>
+  <div class="field-group">
+    <mat-form-field>
+      <mat-label>Interest Rate</mat-label>
+      <input matInput type="number" placeholder="Enter Credit Card Interest Rate" required maxlength="3" [(ngModel)]="newCreditCard.interestRate" name="interestRate" #interestRate="ngModel">
+      <mat-error>
+        @if (interestRate.touched && interestRate.errors) {
+          @if (interestRate.errors['required']) {
+          {{requiredErrMsg('Interest Rate')}}
+          }  @else if (interestRate.errors['maxlength']) {
+          {{maxlengthErrMsg('Interest Rate')}}
+          }
+        }
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Annual Fee</mat-label>
+      <input matInput type="number" placeholder="Enter Credit Card Annual Fee" required maxlength="20" [(ngModel)]="newCreditCard.annualFee" name="annualFee" #annualFee="ngModel">
+      <mat-error>
+        @if (annualFee.touched && annualFee.errors) {
+          @if (annualFee.errors['required']) {
+          {{requiredErrMsg('Annual Fee')}}
+          }
+           @else if (annualFee.errors['maxlength']) {
+          {{maxlengthErrMsg('Annual Fee')}}
+          }
+        }
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-checkbox [(ngModel)]="newCreditCard.active" name="active">Active</mat-checkbox>
+  <mat-form-field>
+    <mat-label>Select Recommand Credit Score</mat-label>
+    <mat-select placeholder="Select Recommand Credit Score" [(ngModel)]="newCreditCard.recommendedScore" name="recommendedScore">
+      <mat-option value="100-500">100-500</mat-option>
+      <mat-option value="300-500">300-500</mat-option>
+      <mat-option value="200-400">200-400</mat-option>
+      <mat-option value="400-600">400-600</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Choose a created date</mat-label>
+    <input matInput required [matDatepicker]="createdDatePicker" [(ngModel)]="newCreditCard.createdDate" name="createdDate" #createdDate="ngModel">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="createdDatePicker"></mat-datepicker-toggle>
+    <mat-datepicker #createdDatePicker></mat-datepicker>
+    <mat-error>
+    @if (createdDate.touched && createdDate.invalid) {
+      {{requiredErrMsg('Created date')}}
+    }
+    </mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" [disabled]="!addForm.valid" class="btn">Add New Credit Card</button>
+</form>
+
