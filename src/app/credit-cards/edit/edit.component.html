@@ -1,1 +1,92 @@
-<p>edit works!</p>
+<h1>Edit Credit Card</h1>
+<form [formGroup]="editForm" (ngSubmit)="updateCreditCard()">
+  <div class="field-group">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter Credit Card Name" formControlName="name">
+      <mat-error>
+        @if (editForm.get('name')?.touched && editForm.get('name')?.errors) {
+          @if (editForm.get('name')?.hasError('required')) {
+          {{requiredErrMsg('Name')}}
+          } @else if (editForm.get('name')?.hasError('minlength')) {
+          {{minlengthErrMsg('Name')}}
+          } @else if (editForm.get('name')?.hasError('maxlength')) {
+          {{maxlengthErrMsg('Name')}}
+          }
+        }
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>bankName</mat-label>
+      <input matInput placeholder="Enter Bank Name" formControlName="bankName">
+      <mat-error>
+        @if (editForm.get('bankName')?.touched && editForm.get('bankName')?.errors) {
+          @if (editForm.get('bankName')?.hasError('required')) {
+          {{requiredErrMsg('Bank Name')}}
+          } @else if (editForm.get('bankName')?.hasError('minlength')) {
+          {{minlengthErrMsg('Bank Name')}}
+          } @else if (editForm.get('bankName')?.hasError('maxlength')) {
+          {{maxlengthErrMsg('Bank Name')}}
+          }
+        }
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-form-field>
+    <mat-label>Descreption</mat-label>
+    <input matInput placeholder="Enter Credit Card Descreption" formControlName="description">
+    <mat-error>
+      @if (editForm.get('description')?.touched && editForm.get('description')?.errors) {
+        {{requiredErrMsg('Description')}}
+        }
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Max Credit</mat-label>
+    <input matInput type="number" placeholder="Enter Credit Card Max Credit" formControlName="maxCredit">
+    <mat-error>
+      @if (editForm.get('maxCredit')?.touched && editForm.get('maxCredit')?.errors) {
+      @if (editForm.get('maxCredit')?.hasError('required')) {
+      {{requiredErrMsg('Max Credit')}}
+      } @else {
+      MaxCredit must not be less than 200.
+      }
+      }
+    </mat-error>
+  </mat-form-field>
+  <div class="field-group">
+    <mat-form-field>
+      <mat-label>Interest Rate</mat-label>
+      <input matInput type="number" placeholder="Enter Credit Card Interest Rate" formControlName="interestRate">
+      <mat-error>
+        @if (editForm.get('interestRate')?.touched && editForm.get('interestRate')?.errors) {
+        @if (editForm.get('interestRate')?.hasError('required')) {
+        {{requiredErrMsg('Interest Rate')}}
+        } @else {
+        Interest Rate must not be greater than 100.
+        }
+        }
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Annual Fee</mat-label>
+      <input matInput type="number" placeholder="Enter Credit Card Annual Fee" formControlName="annualFee">
+      <mat-error>
+        @if (editForm.get('annualFee')?.touched && editForm.get('annualFee')?.errors) {
+        {{requiredErrMsg('Annual Fee')}}
+        }
+      </mat-error>
+    </mat-form-field>
+  </div>
+  <mat-checkbox formControlName="active">Active</mat-checkbox>
+  <mat-form-field>
+    <mat-label>Select Recommand Credit Score</mat-label>
+    <mat-select placeholder="Select Recommand Credit Score" formControlName="recommendedScore">
+      <mat-option value="100-500">100-500</mat-option>
+      <mat-option value="300-500">300-500</mat-option>
+      <mat-option value="200-400">200-400</mat-option>
+      <mat-option value="400-600">400-600</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" class="btn" [disabled]="!editForm.valid">Save Edit</button>
+</form>
