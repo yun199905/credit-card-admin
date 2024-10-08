@@ -1,0 +1,19 @@
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  mat-form-field {
+    display: block;
+    width: 40%;
+    max-width: 400px;
+    min-width: 220px;
+  }
+
+  .field-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
