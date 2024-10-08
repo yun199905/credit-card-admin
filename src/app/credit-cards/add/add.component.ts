@@ -11,6 +11,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CreditCardsService } from '../../services/credit-cards.service';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-add',
@@ -22,6 +24,7 @@ import { Router } from '@angular/router';
 })
 export class AddComponent {
   #creditCardsService = inject(CreditCardsService);
+  #notificationService = inject(NotificationService);
   #router = inject(Router);
   newCreditCard: CreditCard = {
     id: undefined,
@@ -37,6 +40,7 @@ export class AddComponent {
     createdDate: Date(),
     updatedDate: Date()
   }
+  destory$: Subject<void> = new Subject<void>();
 
   requiredErrMsg(filed: string) {
     return `${filed} is required`;
@@ -51,15 +55,21 @@ export class AddComponent {
   }
 
   addCreditCard() {
-    this.#creditCardsService.createCreditCards(this.newCreditCard).subscribe({
+    this.#creditCardsService.createCreditCards(this.newCreditCard)
+    .pipe(takeUntil(this.destory$))
+    .subscribe({
       next: () => {
-        alert("Credit card added successfully");
+        this.#notificationService.showMsg('Credit card added successfully');
         this.#router.navigate(['/credit-cards']);
       },
       error: (error) => {
-        console.error('Error adding credit card:', error);
+        this.#notificationService.showMsg(error.message);
       }
     });
   }
 
+  ngOnDestroy() {
+    this.destory$.next();
+    this.destory$.complete();
+  }
 }

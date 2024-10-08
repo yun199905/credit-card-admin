@@ -1,7 +1,8 @@
 import { Component, inject, Input, numberAttribute } from '@angular/core';
-import { CreditCard } from '../../models/credit-cards';
 import { CreditCardsService } from '../../services/credit-cards.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-delete',
@@ -12,19 +13,19 @@ import { Router } from '@angular/router';
 })
 export class DeleteComponent {
   #creditCardsService = inject(CreditCardsService);
+  #notificationService = inject(NotificationService);
   #router = inject(Router);
-  creditCardId!: number;
+  destory$: Subject<void> = new Subject<void>();
 
   @Input({ transform: numberAttribute }) id!: number;
 
   ngOnInit() {
-    this.creditCardId = this.id;
-
-    if (this.creditCardId) {
-      this.#creditCardsService.deleteCreditCard(this.creditCardId)
+    if (this.id) {
+      this.#creditCardsService.deleteCreditCard(this.id)
+      .pipe(takeUntil(this.destory$))
       .subscribe({
         next: () => {
-          alert("Credit card deleted successfully");
+          this.#notificationService.showMsg('Credit card deleted successfully');
           this.#router.navigate(['/credit-cards']);
         },
         error: (error) => {
@@ -32,5 +33,10 @@ export class DeleteComponent {
         }
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.destory$.next();
+    this.destory$.complete();
   }
 }
