@@ -1,0 +1,40 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .summary {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+
+    .summary-card {
+      flex: 1;
+      min-width: 250px;
+
+      mat-card-content {
+        font-size: 38px;
+      }
+    }
+  }
+
+  .bg-blue {
+    background: #94BABF;
+  }
+
+  .bg-green {
+    background: #1b998b;
+  }
+
+  .bg-beige {
+    background: #EAE8E3;
+  }
+
+  .bg-yellow {
+    background: #E6A560;
+  }
+
+  mat-icon {
+    color: #3C4852;
+  }
+}

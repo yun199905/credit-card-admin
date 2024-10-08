@@ -1,67 +1,74 @@
-<mat-card appearance="outlined">
-  <mat-card-header>
-    <mat-card-title> Australian Shepherd</mat-card-title>
-  </mat-card-header>
+<div class="summary">
+  <mat-card class="summary-card bg-blue">
+    <mat-card-header>
+      <mat-card-title>Num of Cards</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>{{ numOfCards }}</mat-card-content>
+  </mat-card>
+  <mat-card class="summary-card bg-beige">
+    <mat-card-header>
+      <mat-card-title>Num of Active Cards</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>{{ numOfActiveCards }}</mat-card-content>
+  </mat-card>
+  <mat-card class="summary-card bg-yellow">
+    <mat-card-header>
+      <mat-card-title>Num of Banks</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>{{ numOfBanks }}</mat-card-content>
+  </mat-card>
+</div>
 
-</mat-card>
-<mat-card class="mat-card">
+<mat-card>
   <mat-card-header>
     <mat-card-title>Listing All Credit Cards</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <table mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="select">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
-          <mat-checkbox></mat-checkbox>
-        </td>
-      </ng-container>
+    <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>Id</th>
-        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>name</th>
-        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let element">{{element.description}}</td>
+        <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="bankName">
-        <th mat-header-cell *matHeaderCellDef>Bank Name</th>
-        <td mat-cell *matCellDef="let element">{{element.bankName}}</td>
+        <mat-header-cell *matHeaderCellDef>Bank Name</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.bankName }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="maxCredit">
-        <th mat-header-cell *matHeaderCellDef>Max Credit</th>
-        <td mat-cell *matCellDef="let element">{{element.maxCredit}}</td>
+        <mat-header-cell *matHeaderCellDef>Max Credit</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.maxCredit }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="interestRate">
-        <th mat-header-cell *matHeaderCellDef>Interest Rate</th>
-        <td mat-cell *matCellDef="let element">{{element.interestRate}}</td>
+        <mat-header-cell *matHeaderCellDef>Interest Rate</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.interestRate }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="active">
-        <th mat-header-cell *matHeaderCellDef>Active</th>
-        <td mat-cell *matCellDef="let element">{{element.active}}</td>
+        <mat-header-cell *matHeaderCellDef>Active</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.active }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="recommendedScore">
-        <th mat-header-cell *matHeaderCellDef>Recommended Score</th>
-        <td mat-cell *matCellDef="let element">{{element.recommendedScore}}</td>
+        <mat-header-cell *matHeaderCellDef>Recommended Score</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.recommendedScore }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
-        <td mat-cell *matCellDef="let element">
-          <a [routerLink]="['view', element.id]"><mat-icon aria-hidden="false" aria-label="Example home icon"
-              fontIcon="info"></mat-icon></a>
-          <a [routerLink]="['edit', element.id]"><mat-icon aria-hidden="false" aria-label="Example home icon"
-              fontIcon="edit"></mat-icon></a>
-          <a [routerLink]="['delete', element.id]"><mat-icon aria-hidden="false" aria-label="Example home icon"
-              fontIcon="delete"></mat-icon></a>
-        </td>
+        <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <a [routerLink]="['view', element.id]"><mat-icon aria-hidden="false" aria-label="View">info</mat-icon></a>
+          <a [routerLink]="['edit', element.id]"><mat-icon aria-hidden="false" aria-label="Edit">edit</mat-icon></a>
+          <a [routerLink]="['delete', element.id]"><mat-icon aria-hidden="false" aria-label="Delete">delete</mat-icon></a>
+        </mat-cell>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
-    </table>
+
+      <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
+    </mat-table>
     <mat-paginator [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
   </mat-card-content>
 </mat-card>

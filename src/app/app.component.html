@@ -11,11 +11,11 @@
     <mat-icon>share</mat-icon>
   </button>
 </mat-toolbar>
-
 <mat-drawer-container class="content-container">
-  <mat-drawer mode="side" [opened]="sidebarOpen" class="sidebar">Drawer content</mat-drawer>
+  <mat-drawer mode="side" [opened]="sidebarOpen" class="sidebar">
+    <app-sidebar></app-sidebar>
+  </mat-drawer>
   <mat-drawer-content class="main-content">
-    Main content
     <router-outlet />
   </mat-drawer-content>
 </mat-drawer-container>

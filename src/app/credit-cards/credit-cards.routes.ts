@@ -11,7 +11,7 @@ export const creditCardsRoutes: Routes = [
     component: CreditCardsComponent
   },
   {
-    path: 'add/:id',
+    path: 'add',
     component: AddComponent
   },
   {
